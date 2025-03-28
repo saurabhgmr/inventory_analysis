@@ -1,8 +1,7 @@
-fastapi==0.95.1
+Flask==2.2.5
 psycopg2-binary==2.9.6
-uvicorn==0.22.0
-mangum==0.14.0
-Flask==2.3.3
-Flask-Cors==3.0.10
 pandas
-gunicorn==20.1.0
+neuralforecast
+flask-cors
+statsmodels
+gunicorn
