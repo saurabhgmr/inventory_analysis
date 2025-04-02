@@ -172,7 +172,7 @@ def slide4_cumulative_receipt():
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)  # Use DictCursor
 
         cursor.execute("""
-            SELECT goods_recipient
+            SELECT goods_recipient, amount 
             FROM slide4_cumulative_receipt
         """)
         results = cursor.fetchall()  
@@ -181,16 +181,14 @@ def slide4_cumulative_receipt():
 
         # With DictCursor, you can access by key or index
         cum_data = [
-            {"goods_recipient": row["goods_recipient"]} 
+            {"goods_recipient": row["goods_recipient"], "amount": row["amount"]} 
             for row in results
         ]
         return jsonify({"Receipt_wise_cumulative_amount": cum_data}), 200
     except Exception as e:
         # Add more detailed error info
-        import traceback
-        print(f"Error: {str(e)}")
-        print(traceback.format_exc())
-        return jsonify({"error": str(e)}), 500
+        
+        return jsonify({"error": "Hello"}), 500
 
         
 
