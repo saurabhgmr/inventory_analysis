@@ -162,8 +162,10 @@ def average_breakdowns():
 
 @app.route("/slide4_cumulative_receipt", methods=["GET"])
 def slide4_cumulative_receipt():    
+    conn = get_db_connection()
+    if conn is None:
+        return jsonify({"error": "Unable to connect to the database"}), 500
     try:
-        conn = get_db_connection()
         cursor = conn.cursor()
 
         cursor.execute("""
@@ -171,8 +173,6 @@ def slide4_cumulative_receipt():
             FROM slide4_cumulative_receipt
         """)
         results = cursor.fetchall()
-        
-        
         cursor.close()
         conn.close()
 
@@ -182,6 +182,7 @@ def slide4_cumulative_receipt():
             for row in results
         ]
         return jsonify({"Receipt_wise_cumulative_amount": cum_data}), 200
+    
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
