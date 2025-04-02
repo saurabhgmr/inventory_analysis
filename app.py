@@ -176,14 +176,12 @@ def slide4_cumulative_receipt():
         cursor.close()
         conn.close()
 
-        # Prepare the response as key-value pairs
+        # Prepare the response using numerical indices
         cum_data = [
-            {"goods_recipient": row["goods_recipient"], "Amount": row["Amount"]}
+            {"goods_recipient": row[0], "Amount": row[1]}
             for row in results
-        ]
+]
         return jsonify({"Receipt_wise_cumulative_amount": cum_data}), 200
-    
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
         
