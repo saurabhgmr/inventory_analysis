@@ -172,10 +172,10 @@ def slide4_cumulative_receipt():
         cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)  # Use DictCursor
 
         cursor.execute("""
-            SELECT goods_recipient 
+            SELECT goods_recipient
             FROM slide4_cumulative_receipt
         """)
-        results = cursor.fetchall() 
+        results = cursor.fetchall()  
         cursor.close()
         conn.close()
 
