@@ -174,7 +174,7 @@ def slide4_cumulative_receipt():
 
         cursor.execute("""
             SELECT goods_recipient, amount 
-            FROM slide4_cumulative_receipt WHERE goods_recipient ='FMS'
+            FROM slide4_cumulative_receipt
         """)
         results = cursor.fetchall()  
         cursor.close()
