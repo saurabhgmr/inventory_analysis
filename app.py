@@ -168,8 +168,9 @@ def slide4_cumulative_receipt():
     conn = get_db_connection()
     if conn is None:
         return jsonify({"error": "Unable to connect to the database"}), 500
+
     try:
-        cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)  # Use DictCursor
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)  # Use RealDictCursor
 
         cursor.execute("""
             SELECT goods_recipient, amount 
@@ -179,17 +180,18 @@ def slide4_cumulative_receipt():
         cursor.close()
         conn.close()
 
-        # With DictCursor, you can access by key or index
+        # Ensure lowercase column names
         cum_data = [
-            {"goods_recipient": row["goods_recipient"], "amount": row["amount"]} for row in results
+            {"goods_recipient": row.get("goods_recipient"), "amount": row.get("amount")} for row in results
         ]
+
         return jsonify({"Receipt_wise_cumulative_amount": cum_data}), 200
     except Exception as e:
-        # Add more detailed error info
         import traceback
         print(f"Error: {str(e)}")
         print(traceback.format_exc())
         return jsonify({"error": str(e)}), 500
+
 
         
 
