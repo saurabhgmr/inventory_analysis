@@ -3,6 +3,8 @@ import os
 import psycopg2
 import json
 import calendar
+import psycopg2.extras  # Import DictCursor
+
 # from psycopg2.extras import RealDictCursor
 
 # Environment variables for database credentials
@@ -161,9 +163,6 @@ def average_breakdowns():
         return jsonify({"error": str(e)}), 500
     
 
-import psycopg2.extras  # Import DictCursor
-
-import psycopg2.extras  # Import DictCursor
 
 @app.route("/slide4_cumulative_receipt", methods=["GET"])
 def slide4_cumulative_receipt():    
