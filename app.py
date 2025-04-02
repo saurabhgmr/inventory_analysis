@@ -3,6 +3,7 @@ import os
 import psycopg2
 import json
 import calendar
+from psycopg2.extras import RealDictCursor
 
 # Environment variables for database credentials
 DB_NAME = os.getenv("DB_NAME", "material_db")
@@ -166,7 +167,8 @@ def slide4_cumulative_receipt():
     if conn is None:
         return jsonify({"error": "Unable to connect to the database"}), 500
     try:
-        cursor = conn.cursor()
+        # Use RealDictCursor to get results as dictionaries
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
         cursor.execute("""
             SELECT goods_recipient, Amount
@@ -176,11 +178,11 @@ def slide4_cumulative_receipt():
         cursor.close()
         conn.close()
 
-        # Prepare the response using numerical indices
+        # Prepare the response as key-value pairs
         cum_data = [
-            {"goods_recipient": row[0], "Amount": row[1]}
+            {"goods_recipient": row["goods_recipient"], "Amount": row["Amount"]}
             for row in results
-]
+        ]
         return jsonify({"Receipt_wise_cumulative_amount": cum_data}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
