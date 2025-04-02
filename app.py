@@ -158,6 +158,34 @@ def average_breakdowns():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@app.route("/slide4_cumulative_receipt", methods=["GET"])
+def slide4_cumulative_receipt():    
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT goods_recipient, Amount
+            FROM slide4_cumulative_receipt
+        """)
+        results = cursor.fetchall()
+        
+        
+        cursor.close()
+        conn.close()
+
+        # Prepare the response as key-value pairs
+        cum_data = [
+            {"goods_recipient": row["goods_recipient"], "Amount": row["Amount"]}
+            for row in results
+        ]
+        return jsonify({"Receipt_wise_cumulative_amount": cum_data}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+        
 
 # Run Flask App
 if __name__ == "__main__":
