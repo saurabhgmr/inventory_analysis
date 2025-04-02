@@ -170,7 +170,7 @@ def slide4_cumulative_receipt():
         cursor = conn.cursor()  # Standard cursor returning tuples
 
         cursor.execute("""
-            SELECT goods_recipient, Amount
+            SELECT goods_recipient, amount
             FROM slide4_cumulative_receipt
         """)
         results = cursor.fetchall()
