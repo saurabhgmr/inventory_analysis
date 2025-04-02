@@ -4,8 +4,7 @@ import psycopg2
 import json
 import calendar
 import psycopg2.extras  # Import DictCursor
-
-# from psycopg2.extras import RealDictCursor
+from psycopg2.extras import RealDictCursor
 
 # Environment variables for database credentials
 DB_NAME = os.getenv("DB_NAME", "material_db")
@@ -176,7 +175,7 @@ def slide4_cumulative_receipt():
             SELECT goods_recipient, amount 
             FROM slide4_cumulative_receipt
         """)
-        results = cursor.fetchall()
+        results = cursor.fetchall(RealDictCursor)
         cursor.close()
         conn.close()
 
