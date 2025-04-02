@@ -182,7 +182,7 @@ def slide4_cumulative_receipt():
 
         # Ensure lowercase column names
         cum_data = [
-            {"goods_recipient": row.get("goods_recipient"), "amount": row.get("amount")} for row in results
+            {"goods_recipient": row.get[1], "amount": row.get[0]} for row in results
         ]
 
         return jsonify({"Receipt_wise_cumulative_amount": cum_data}), 200
